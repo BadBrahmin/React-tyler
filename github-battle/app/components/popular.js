@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fetchPopularRepos } from "../utils/api";
+import {
+  FaUser,
+  FaStar,
+  FaCodeBranch,
+  FaExclamationTriangle
+} from "react-icons/fa"; // its react-icons/fa not react-icons
 
 function LanguagesNav({ selected, onUpdateLanguage }) {
   const languages = ["All", "JavaScript", "Ruby", "Java", "Python"];
@@ -55,6 +61,28 @@ function ReposGrid({ repos }) {
                 {login}
               </a>
             </h2>
+
+            <ul className="card-list">
+              <li>
+                <FaUser color="red" size={22} />
+                <a href={`https://github.com/${login}`}>{name}</a>
+              </li>
+
+              <li>
+                <FaStar color="red" size={22} />
+                {stargazers_count.toLocaleString()} stars
+              </li>
+
+              <li>
+                <FaCodeBranch color="red" size={22} />
+                {forks.toLocaleString()} forks
+              </li>
+
+              <li>
+                <FaExclamationTriangle color="red" size={22} />
+                {open_issues.toLocaleString()} open issues
+              </li>
+            </ul>
           </li>
         );
       })}
