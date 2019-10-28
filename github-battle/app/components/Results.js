@@ -80,33 +80,28 @@ export default class Results extends React.Component {
               <FaUser color="tomato" size={22} />
               {winner.profile.name}
             </li>
-            //location
             {winner.profile.location && (
               <li>
                 <FaCompass color="tomato" size={22} />
                 {winner.profile.location}
               </li>
             )}
-            //Company
             {winner.profile.company && (
               <li>
                 <FaBriefcase color="tomato" size={22} />
                 {winner.profile.company}
               </li>
             )}
-            //followers
             <li>
               <FaUsers color="tomato" size={22} />
               {winner.profile.followers.toLocaleString()} followers
             </li>
-            //Following
             <li>
               <FaUserFriends color="tomato" size={22} />
               {winner.profile.following.toLocaleString()} followers
             </li>
           </ul>
         </div>
-        // // //playerTwo
         <div className="card bg-light">
           <h4 className="header-lg center-text">
             {loser.score === loser.score ? "Tie" : "Loser"}
@@ -126,31 +121,26 @@ export default class Results extends React.Component {
           </h2>
 
           <ul className="card-list">
-            //name
             <li>
               <FaUser color="tomato" size={22} />
               {loser.profile.name}
             </li>
-            //location
             {loser.profile.location && (
               <li>
                 <FaCompass color="tomato" size={22} />
                 {loser.profile.location}
               </li>
             )}
-            //Company
             {loser.profile.company && (
               <li>
                 <FaBriefcase color="tomato" size={22} />
                 {loser.profile.company}
               </li>
             )}
-            //followers
             <li>
               <FaUsers color="tomato" size={22} />
               {loser.profile.followers.toLocaleString()} followers
             </li>
-            //Following
             <li>
               <FaUserFriends color="tomato" size={22} />
               {loser.profile.following.toLocaleString()} followers
