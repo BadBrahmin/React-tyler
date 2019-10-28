@@ -61,72 +61,41 @@ export default class Results extends React.Component {
           subheader={`Score: ${winner.score.toLocaleString()}`}
           avatar={winner.profile.avatar_url}
           name={winner.profile.login}
-        />
-        {/* older code of refactored above
-        <div className="card bg-light">
-          <h4 className="header-lg center-text">
-            {winner.score === loser.score ? "Tie" : "Winner!"}
-          </h4>
-          <img
-            className="avatar"
-            src={winner.profile.avatar_url}
-            alt={`Avatar for ${winner.profile.login}`}
-          ></img>
-
-          <h4 className="center-text">
-            Score: {winner.score.toLocaleString()}
-          </h4>
-
-          <h2 className=" center-text">
-            <a className="link" href={winner.profile.html_url}>
-              {winner.profile.login}
-            </a>
-          </h2> */}
-
-        <ul className="card-list">
-          <li>
-            <FaUser color="tomato" size={22} />
-            {winner.profile.name}
-          </li>
-          {winner.profile.location && (
+        >
+          <ul className="card-list">
             <li>
-              <FaCompass color="tomato" size={22} />
-              {winner.profile.location}
+              <FaUser color="tomato" size={22} />
+              {winner.profile.name}
             </li>
-          )}
-          {winner.profile.company && (
+            {winner.profile.location && (
+              <li>
+                <FaCompass color="tomato" size={22} />
+                {winner.profile.location}
+              </li>
+            )}
+            {winner.profile.company && (
+              <li>
+                <FaBriefcase color="tomato" size={22} />
+                {winner.profile.company}
+              </li>
+            )}
             <li>
-              <FaBriefcase color="tomato" size={22} />
-              {winner.profile.company}
+              <FaUsers color="tomato" size={22} />
+              {winner.profile.followers.toLocaleString()} followers
             </li>
-          )}
-          <li>
-            <FaUsers color="tomato" size={22} />
-            {winner.profile.followers.toLocaleString()} followers
-          </li>
-          <li>
-            <FaUserFriends color="tomato" size={22} />
-            {winner.profile.following.toLocaleString()} followers
-          </li>
-        </ul>
-        <div className="card bg-light">
-          <h4 className="header-lg center-text">
-            {loser.score === winner.score ? "Tie" : "Loser"}
-          </h4>
-          <img
-            className="avatar"
-            src={loser.profile.avatar_url}
-            alt={`Avatar for ${loser.profile.login}`}
-          ></img>
+            <li>
+              <FaUserFriends color="tomato" size={22} />
+              {winner.profile.following.toLocaleString()} followers
+            </li>
+          </ul>
+        </Card>
 
-          <h4 className="center-text">Score: {loser.score.toLocaleString()}</h4>
-
-          <h2 className=" center-text">
-            <a className="link" href={loser.profile.html_url}>
-              {loser.profile.login}
-            </a>
-          </h2>
-
+        <Card
+          header={winner.score === loser.score ? "Tie" : "Loser :("}
+          subheader={`Score: ${loser.score.toLocaleString()}`}
+          avatar={loser.profile.avatar_url}
+          name={loser.profile.login}
+        >
           <ul className="card-list">
             <li>
               <FaUser color="tomato" size={22} />
@@ -153,9 +122,7 @@ export default class Results extends React.Component {
               {loser.profile.following.toLocaleString()} followers
             </li>
           </ul>
-        </div>
-        {/* Results
-        <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
+        </Card>
       </div>
     );
   }
