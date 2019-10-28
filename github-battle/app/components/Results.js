@@ -8,6 +8,7 @@ import {
   FaCode,
   FaUser
 } from "react-icons/fa";
+import Card from "./Card";
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -55,6 +56,13 @@ export default class Results extends React.Component {
 
     return (
       <div className="grid space-around container-sm">
+        <Card
+          header={winner.score === loser.score ? "Tie" : "Winner!"}
+          subheader={`Score: ${winner.score.toLocaleString()}`}
+          avatar={winner.profile.avatar_url}
+          name={winner.profile.login}
+        />
+        {/* older code of refactored above
         <div className="card bg-light">
           <h4 className="header-lg center-text">
             {winner.score === loser.score ? "Tie" : "Winner!"}
@@ -73,38 +81,37 @@ export default class Results extends React.Component {
             <a className="link" href={winner.profile.html_url}>
               {winner.profile.login}
             </a>
-          </h2>
+          </h2> */}
 
-          <ul className="card-list">
+        <ul className="card-list">
+          <li>
+            <FaUser color="tomato" size={22} />
+            {winner.profile.name}
+          </li>
+          {winner.profile.location && (
             <li>
-              <FaUser color="tomato" size={22} />
-              {winner.profile.name}
+              <FaCompass color="tomato" size={22} />
+              {winner.profile.location}
             </li>
-            {winner.profile.location && (
-              <li>
-                <FaCompass color="tomato" size={22} />
-                {winner.profile.location}
-              </li>
-            )}
-            {winner.profile.company && (
-              <li>
-                <FaBriefcase color="tomato" size={22} />
-                {winner.profile.company}
-              </li>
-            )}
+          )}
+          {winner.profile.company && (
             <li>
-              <FaUsers color="tomato" size={22} />
-              {winner.profile.followers.toLocaleString()} followers
+              <FaBriefcase color="tomato" size={22} />
+              {winner.profile.company}
             </li>
-            <li>
-              <FaUserFriends color="tomato" size={22} />
-              {winner.profile.following.toLocaleString()} followers
-            </li>
-          </ul>
-        </div>
+          )}
+          <li>
+            <FaUsers color="tomato" size={22} />
+            {winner.profile.followers.toLocaleString()} followers
+          </li>
+          <li>
+            <FaUserFriends color="tomato" size={22} />
+            {winner.profile.following.toLocaleString()} followers
+          </li>
+        </ul>
         <div className="card bg-light">
           <h4 className="header-lg center-text">
-            {loser.score === loser.score ? "Tie" : "Loser"}
+            {loser.score === winner.score ? "Tie" : "Loser"}
           </h4>
           <img
             className="avatar"
