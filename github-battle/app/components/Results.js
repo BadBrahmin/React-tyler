@@ -1,19 +1,164 @@
 import React from "react";
 import { battle } from "../utils/api";
+import {
+  FaCompass,
+  FaBriefcase,
+  FaUsers,
+  FaUserFriends,
+  FaCode,
+  FaUser
+} from "react-icons/fa";
 
 export default class Results extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      winner: null,
+      loser: null,
+      error: null,
+      loading: true
+    };
+  }
   componentDidMount() {
     const { playerOne, playerTwo } = this.props;
 
-    battle([playerOne, playerTwo]).then(players => {
-      console.log("data: ", players);
-    });
+    battle([playerOne, playerTwo])
+      .then(players => {
+        // console.log("data: ", players);
+
+        //in case of successful mount
+        this.setState({
+          winner: players[0],
+          loser: players[1],
+          error: null,
+          loading: false
+        });
+      })
+
+      //incase of error
+      .catch(({ message }) => {
+        this.setState({
+          error: message,
+          loading: false
+        });
+      });
   }
   render() {
+    const { winner, loser, error, loading } = this.state;
+
+    if (loading === true) {
+      return <p>Loading</p>;
+    }
+    if (error) {
+      return <p className="center-text error">{error}</p>;
+    }
+
     return (
-      <div>
-        Results
-        <pre>{JSON.stringify(this.props, null, 2)}</pre>
+      <div className="grid space-around container-sm">
+        <div className="card bg-light">
+          <h4 className="header-lg center-text">
+            {winner.score === loser.score ? "Tie" : "Winner!"}
+          </h4>
+          <img
+            className="avatar"
+            src={winner.profile.avatar_url}
+            alt={`Avatar for ${winner.profile.login}`}
+          ></img>
+
+          <h4 className="center-text">
+            Score: {winner.score.toLocaleString()}
+          </h4>
+
+          <h2 className=" center-text">
+            <a className="link" href={winner.profile.html_url}>
+              {winner.profile.login}
+            </a>
+          </h2>
+
+          <ul className="card-list">
+            <li>
+              <FaUser color="tomato" size={22} />
+              {winner.profile.name}
+            </li>
+            //location
+            {winner.profile.location && (
+              <li>
+                <FaCompass color="tomato" size={22} />
+                {winner.profile.location}
+              </li>
+            )}
+            //Company
+            {winner.profile.company && (
+              <li>
+                <FaBriefcase color="tomato" size={22} />
+                {winner.profile.company}
+              </li>
+            )}
+            //followers
+            <li>
+              <FaUsers color="tomato" size={22} />
+              {winner.profile.followers.toLocaleString()} followers
+            </li>
+            //Following
+            <li>
+              <FaUserFriends color="tomato" size={22} />
+              {winner.profile.following.toLocaleString()} followers
+            </li>
+          </ul>
+        </div>
+        // // //playerTwo
+        <div className="card bg-light">
+          <h4 className="header-lg center-text">
+            {loser.score === loser.score ? "Tie" : "Loser"}
+          </h4>
+          <img
+            className="avatar"
+            src={loser.profile.avatar_url}
+            alt={`Avatar for ${loser.profile.login}`}
+          ></img>
+
+          <h4 className="center-text">Score: {loser.score.toLocaleString()}</h4>
+
+          <h2 className=" center-text">
+            <a className="link" href={loser.profile.html_url}>
+              {loser.profile.login}
+            </a>
+          </h2>
+
+          <ul className="card-list">
+            //name
+            <li>
+              <FaUser color="tomato" size={22} />
+              {loser.profile.name}
+            </li>
+            //location
+            {loser.profile.location && (
+              <li>
+                <FaCompass color="tomato" size={22} />
+                {loser.profile.location}
+              </li>
+            )}
+            //Company
+            {loser.profile.company && (
+              <li>
+                <FaBriefcase color="tomato" size={22} />
+                {loser.profile.company}
+              </li>
+            )}
+            //followers
+            <li>
+              <FaUsers color="tomato" size={22} />
+              {loser.profile.followers.toLocaleString()} followers
+            </li>
+            //Following
+            <li>
+              <FaUserFriends color="tomato" size={22} />
+              {loser.profile.following.toLocaleString()} followers
+            </li>
+          </ul>
+        </div>
+        {/* Results
+        <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
       </div>
     );
   }
